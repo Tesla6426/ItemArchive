@@ -1,0 +1,5 @@
+# Stores theme/format data for the archives
+# Do not mess with this file if you do not know what you are doing
+# Use the in-game itemarchive:setArchiveTheme commands instead
+
+archive:

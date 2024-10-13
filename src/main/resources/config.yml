@@ -1,0 +1,34 @@
+# ItemArchive by _txsla
+
+# Sets how many extra archive cache slots are reserved in memory
+# It is recommended to set this number as low as possible (can be set to 0 if you are not creating any new archives)
+# You can only make this many archives per restart
+max-new-archives: 1
+
+# NBT version
+# 0 = 1.20.4-
+# 1 = 1.21+
+item-version: "1"
+
+submission:
+  allowSubmissions: true # Let players submit items
+  delay: 10000 # Submit delay in milliseconds
+  # Item size in archive, NOT NBT SIZE
+  min-nbt-size: 350 # Smallest item size (in bytes)
+  max-nbt-size: 512000 # Largest item size (in bytes)
+  banned-players:
+    - "microsoft"
+
+# How to make a new archive:
+#
+# Step 0:
+#   set config.max-new-archives to the number of archives you want to create
+#      (larger numbers use slightly more RAM, you can set to zero once you are done creating archives)
+# Step 1:
+#   run /create-archive <name-of-archive>
+#     + you can technically stop here
+# Step 2:
+#   use /setGuiConfig to customise archive gui
+#   do not mess with /setGuiConfig <archive> CustomLayout unless you know what you are doing
+#
+#

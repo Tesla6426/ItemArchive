@@ -1,0 +1,104 @@
+name: ItemArchive
+version: '${project.version}'
+api-version: '1.20'
+main: net.txsla.itemarchive.ItemArchive
+
+permissions :
+  archive.operator:
+    description: "Grants player control over the archive"
+    default-permission: false
+    default: op
+  archive.public:
+    description: "Allows the average player to interact with the archive"
+    default-permission: true
+    default: true
+  archive.debug:
+    description: "dev only"
+    default-permission: false
+    default: op
+
+commands:
+  open:
+    description: "Opens the Archives"
+    usage: "/archive <archive> <page>"
+    aliases: [preview]
+    permission: archive.public
+    permission-message: "You do not have permission to use this command"
+  submit:
+    description: "Submit an item to the archives"
+    usage: "/submit <archive>"
+    aliases: [upload, item-submit]
+    permission: archive.public
+    permission-message: "You do not have permission to use this command"
+  search:
+    description: "Search for an item in the archive"
+    usage: "/search <archive> [item_name, item_type] <args>"
+    aliases: [find, item-search]
+    permission: archive.public
+    permission-message: "You do not have permission to use this command"
+  remove-item:
+    description: "Remove an item(s) from the archive"
+    usage: "/remove <archive> [remove-type] <data>"
+    aliases: []
+    permission: archive.operator
+    permission-message: "You do not have permission to use this command"
+  submit-ban:
+    description: "Ban a player from submitting items"
+    usage: "/submit-ban <player>"
+    aliases: []
+    permission: archive.operator
+    permission-message: "You do not have permission to use this command"
+  list-archives:
+    description: "Lists all existing archives"
+    usage: "/list-archives"
+    aliases: []
+    permission: archive.public
+    permission-message: "You do not have permission to use this command"
+  print-archive:
+    description: "Prints archive data into chat"
+    usage: "/print-archive <archive>"
+    aliases: []
+    permission: archive.debug
+    permission-message: "You do not have permission to use this command"
+  create-archive:
+    description: "Creates an archive"
+    usage: "/create-archive <archive>"
+    aliases: []
+    permission: archive.operator
+    permission-message: "You do not have permission to use this command"
+  find-submitter:
+    description: "Finds the person who submitted the item in your hand"
+    usage: "/find-submitter <archive>"
+    aliases: []
+    permission: archive.operator
+    permission-message: "You do not have permission to use this command"
+  hash-item:
+    description: "Returns the hash of the held item"
+    usage: "/hash-item"
+    aliases: []
+    permission: archive.public
+    permission-message: "You do not have permission to use this command"
+  count-items:
+    description: "Counts all items in an archive"
+    usage: "/count-items <archive>"
+    aliases: []
+    permission: archive.public
+    permission-message: "You do not have permission to use this command"
+  item-size:
+    description: "Returns size of held item"
+    usage: "/item-size"
+    aliases: []
+    permission: archive.public
+    permission-message: "You do not have permission to use this command"
+  set-gui:
+    description: "Returns size of held item"
+    usage: "/set-archive-gui <archive> [title_color, filler_item, label_item, submit_item, next_page_item, prev_page_item, customGui, customLayout] <data>"
+    aliases: []
+    permission: archive.operator
+    permission-message: "You do not have permission to use this command"
+  bulk-submit:
+    description: "Submit all items in your inventory"
+    usage: "/bulk-submit <archive>"
+    aliases: []
+    permission: archive.operator
+    permission-message: "You do not have permission to use this command"
