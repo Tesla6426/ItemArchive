@@ -59,7 +59,7 @@ public class ArchiveManager {
     public static void submitItems(String archive, String player,String version, ItemStack[] items) {
         // open thread for async writing
         Player p = Bukkit.getPlayer(player);
-        p.sendMessage("§aSubmitting items to" + archive + "§a!");
+        p.sendMessage("§aSubmitting items to " + archive + "§a!");
         Thread submitThread = new Thread(()->{
 
             //declare some bullshit
@@ -84,14 +84,18 @@ public class ArchiveManager {
 
                 // Decide if you want to skip an item
                 isDuplicate = false;
-                for (int n = ArchiveCache[archiveIndex].length; n > 0; n--) {
-                    // Check if item is a duplicate
-                    if (ArchiveCache[archiveIndex][n-1][4].matches(hashed)) {
-                        plugin.getLogger().info("Rejecting Item for isDuplicate: " + hashed);
-                        isDuplicate = true; break;
-                    }
-                }
 
+                // disable duplicate checks if no items are in the server
+                 if (ArchiveCache[archiveIndex].length > 9) {
+                     for (int n = ArchiveCache[archiveIndex].length; n > 0; n--) {
+                         // Check if item is a duplicate
+                         if (ArchiveCache[archiveIndex][n - 1][4].matches(hashed)) {
+                             plugin.getLogger().info("Rejecting Item for isDuplicate: " + hashed);
+                             isDuplicate = true;
+                             break;
+                         }
+                     }
+                 }
                 // Check item size
                 if (!((getNBTSize(item)>minNBTSize)&&(getNBTSize(item)<maxNBTSize))) {
                     isDuplicate = true;
@@ -174,8 +178,10 @@ public class ArchiveManager {
 
         // return air if item is outside of index
         int cacheLength = ArchiveCache[index].length;
-        if (itemIndex > cacheLength-1) return new ItemConverter().toString( new ItemStack(Material.AIR,1) );
 
+        if (itemIndex > cacheLength-1) return new ItemConverter().toString( new ItemStack(Material.AIR,1) );
+        //another check because error
+        if (cacheLength < 3) return new ItemConverter().toString( new ItemStack(Material.AIR,1) );
         // return item
         try {
             return new String(Base64.getDecoder().decode(ArchiveCache[index][itemIndex][5]));
@@ -190,15 +196,23 @@ public class ArchiveManager {
         Thread loadArchive = new Thread(()-> {
         int n, index = CacheLookupTable.indexOf(archive); String data = "", item, hold;
 
+        //REMOVE THIS CODE
+            index = 0;
+
         // get all data in archive as a string
             try {
                 data = new String(Files.readAllBytes(Paths.get(archiveDirectory + File.separator + archive + ".ar")), StandardCharsets.UTF_8);
             }catch (IOException e) { e.printStackTrace(); }
         n = StringUtils.countMatches(data, "\n");
 
-            // Make sure CacheTable isn't null
-            plugin.getLogger().info("[ItemArchive] loading archive : " + archive);
-            ArchiveCache[index] = new String[n-1][6];
+
+            // makesure n doesnt go negative
+            if (n <= 1) {
+                n = 0;
+                ArchiveCache[index] = new String[1][6];
+            }else {
+                ArchiveCache[index] = new String[n - 1][6];
+            }
 
         //parse each item into the array
         // ADD MULTITHREADING SUPPORT LATER
@@ -251,7 +265,6 @@ public static void cacheArchive(String archive) {
     int index = -1;
     // check to make sure archive exists
     if (ArchiveManager.getArchiveList().stream().anyMatch(archive::contains)) {
-
         // check/fix if table is null and read archive cache table for index of current archive
         if (CacheLookupTable != null) index = CacheLookupTable.indexOf(archive);
         else CacheLookupTable = new ArrayList<>();
@@ -264,6 +277,7 @@ public static void cacheArchive(String archive) {
 
         // if archive is not cached, then append it to the lookup table and add it to the cache
         CacheLookupTable.addLast(archive);
+        System.out.println(" " + CacheLookupTable);
         load(archive);
     }
 }

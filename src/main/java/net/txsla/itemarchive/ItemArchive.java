@@ -68,9 +68,11 @@ public final class ItemArchive extends JavaPlugin {
         var = getConfig().getInt("max-new-archives");
         maxNewArchives = ( ( var * var ) / var ) + 1;
         ArchiveManager.ArchiveCache = new String[ maxNewArchives + archives.size() ][][];
+        getLogger().info("archivebuffer = " + (maxNewArchives + archives.size() ));
 
         // Load archives
         for (int x = archives.size(); x > 0; x-- ) {
+            getLogger().info("[loading] loading arcjoev");
             ArchiveManager.cacheArchive(archives.get(x-1));
         }
 
