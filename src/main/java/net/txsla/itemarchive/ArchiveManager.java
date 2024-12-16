@@ -231,7 +231,7 @@ public class ArchiveManager {
                     hold = item.substring(0, item.indexOf("¦"));
                     //matrix[i][y] = hold.replaceAll("¦", "");
                     // Procedural writing?
-                    ArchiveCache[index][i][y] = hold.replaceAll("¦", "");
+                    ArchiveCache[index][i][y] = hold.replaceAll("¦","");
                     item = item.substring(item.indexOf("¦") + 1, item.length());
                 }
                 if (isStopped) {
