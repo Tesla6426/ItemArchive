@@ -1,5 +1,9 @@
 package net.txsla.itemarchive;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import net.txsla.itemarchive.commands.*;
 import net.txsla.itemarchive.events.*;
@@ -30,6 +34,12 @@ public final class ItemArchive extends JavaPlugin {
          * 1.20.4-R0.1-SNAPSHOT
          *
          * */
+
+        // create null item placeholder (for later use)
+        GuiManager.nullItem = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+        ItemMeta nullItemMeta = GuiManager.nullItem.getItemMeta();
+        nullItemMeta.setDisplayName(ChatColor.BLACK + "NULL ITEM");
+        GuiManager.nullItem.setItemMeta(nullItemMeta);
 
         // Find/Create archives folder
         File directory = new File(System.getProperty("user.dir") + File.separator + "archives");

@@ -1,5 +1,6 @@
 package net.txsla.itemarchive;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -27,7 +28,13 @@ public class ItemConverter {
                 restoreConfig.loadFromString(serialized);
                 restoredItem = restoreConfig.getItemStack("item");
         } catch (Exception e) {
-                return ItemConverter.toItemStack("aXRlbToKICA9PTogb3JnLmJ1a2tpdC5pbnZlbnRvcnkuSXRlbVN0YWNrCiAgdjogMzcwMAogIHR5cGU6IFJFRF9TVEFJTkVEX0dMQVNTX1BBTkUKICBtZXRhOgogICAgPT06IEl0ZW1NZXRhCiAgICBtZXRhLXR5cGU6IFVOU1BFQ0lGSUMKICAgIGRpc3BsYXktbmFtZTogJ3sidGV4dCI6IkxvYWRpbmcgSXRlbS4uLiIsImNvbG9yIjoicmVkIiwiaXRhbGljIjpmYWxzZX0nCiAgICBsb3JlOgogICAgLSAneyJ0ZXh0IjoicmUtb3BlbiBwYWdlIHRvIHJlZnJlc2ggaXRlbXMiLCJjb2xvciI6ImdyYXkiLCJpdGFsaWMiOmZhbHNlfScK");
+                ItemStack nullItem = new ItemStack(Material.RED_STAINED_GLASS_PANE, 1);
+                ItemMeta nullItemMeta = nullItem.getItemMeta();
+                nullItemMeta.setMaxStackSize(1);
+                nullItemMeta.setDisplayName(ChatColor.RED + "Loading Item...");
+                nullItem.setItemMeta(nullItemMeta);
+                return nullItem;
+                //return ItemConverter.toItemStack("aXRlbToKICA9PTogb3JnLmJ1a2tpdC5pbnZlbnRvcnkuSXRlbVN0YWNrCiAgdjogMzcwMAogIHR5cGU6IFJFRF9TVEFJTkVEX0dMQVNTX1BBTkUKICBtZXRhOgogICAgPT06IEl0ZW1NZXRhCiAgICBtZXRhLXR5cGU6IFVOU1BFQ0lGSUMKICAgIGRpc3BsYXktbmFtZTogJ3sidGV4dCI6IkxvYWRpbmcgSXRlbS4uLiIsImNvbG9yIjoicmVkIiwiaXRhbGljIjpmYWxzZX0nCiAgICBsb3JlOgogICAgLSAneyJ0ZXh0IjoicmUtb3BlbiBwYWdlIHRvIHJlZnJlc2ggaXRlbXMiLCJjb2xvciI6ImdyYXkiLCJpdGFsaWMiOmZhbHNlfScK");
             }
         return restoredItem;
     }

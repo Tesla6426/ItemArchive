@@ -37,6 +37,7 @@ public class GuiManager {
     public static List<String> archiveOpened;
     private static YamlConfiguration config;
     private static File file;
+    public static ItemStack nullItem;
 
     public void load() {
         // Loads archive theme file in archives folder
@@ -133,7 +134,7 @@ public class GuiManager {
                     case "itm":
                         try {
                             item = ItemConverter.toItemStack(ArchiveManager.getItem(archive, itemIndex));
-                        } catch (InvalidConfigurationException e) {
+                        } catch (Exception e) {
                             item = new ItemStack(Material.AIR, 1);
                         }
                         itemIndex++;
